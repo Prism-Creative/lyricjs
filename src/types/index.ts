@@ -1,6 +1,5 @@
 export interface LyricConfig {
   baseUrl: string;
-  basePath?: string;
 }
 
 export interface BaseResponse {
@@ -11,6 +10,7 @@ export interface BaseResponse {
 
 export interface AuthResponse extends BaseResponse {
   accessToken?: string;
+  userId?: number;
 }
 
 export interface Member {

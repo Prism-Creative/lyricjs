@@ -1,11 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { LyricClient } from './lyric-client';
 
 @Injectable()
 export class LyricService {
-  constructor(
-    private readonly lyricClient: LyricClient,
-  ) {}
+  constructor(private readonly lyricClient: LyricClient) {}
 
   // Expose all the client services through getters
   get auth() {
@@ -44,4 +42,4 @@ export class LyricService {
   clearAuthToken() {
     this.lyricClient.clearAuthToken();
   }
-} 
+}

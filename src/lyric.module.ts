@@ -50,11 +50,7 @@ export class LyricModule {
     return {
       module: LyricModule,
       imports: options.imports || [],
-      providers: [
-        asyncConfigProvider,
-        clientProvider,
-        LyricService,
-      ],
+      providers: [asyncConfigProvider, clientProvider, LyricService],
       exports: [LyricService],
       global: true,
     };

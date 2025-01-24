@@ -24,7 +24,7 @@ export class LyricClient {
 
   constructor(private readonly config: LyricConfig) {
     this.client = axios.create({
-      baseURL: `${this.config.baseUrl}${this.config.basePath || ''}`,
+      baseURL: `${this.config.baseUrl}`,
       headers: {
         'Content-Type': 'application/json',
       },
