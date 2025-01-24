@@ -21,6 +21,6 @@
     "moduleResolution": "node",
     "lib": ["es2017", "dom"]
   },
-  "include": ["src/**/*", "example-usage.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 } 
