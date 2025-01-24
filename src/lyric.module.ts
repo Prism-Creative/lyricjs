@@ -1,6 +1,7 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { LyricClient } from './lyric-client';
 import { LyricConfig } from './types';
+import { LyricService } from './lyric.service';
 
 export const LYRIC_CONFIG = 'LYRIC_CONFIG';
 
@@ -13,21 +14,17 @@ export interface LyricModuleAsyncOptions {
 @Module({})
 export class LyricModule {
   static forRoot(config: LyricConfig): DynamicModule {
-    const configProvider: Provider = {
-      provide: LYRIC_CONFIG,
-      useValue: config,
-    };
-
-    const clientProvider: Provider = {
-      provide: LyricClient,
-      useFactory: (config: LyricConfig) => new LyricClient(config),
-      inject: [LYRIC_CONFIG],
-    };
-
     return {
       module: LyricModule,
-      providers: [configProvider, clientProvider],
-      exports: [LyricClient],
+      providers: [
+        {
+          provide: LYRIC_CONFIG,
+          useValue: config,
+        },
+        LyricClient,
+        LyricService,
+      ],
+      exports: [LyricService],
       global: true,
     };
   }
@@ -48,8 +45,12 @@ export class LyricModule {
     return {
       module: LyricModule,
       imports: options.imports || [],
-      providers: [asyncConfigProvider, clientProvider],
-      exports: [LyricClient],
+      providers: [
+        asyncConfigProvider,
+        clientProvider,
+        LyricService,
+      ],
+      exports: [LyricService],
       global: true,
     };
   }
