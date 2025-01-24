@@ -37,7 +37,7 @@ export class CensusService {
       }
 
       const formData = objectToFormData(payload);
-      const response = await this.client.post<BaseResponse>(
+      const response = await this.client.postForm<BaseResponse>(
         '/census/createMember',
         formData,
       );
@@ -68,7 +68,7 @@ export class CensusService {
       }
 
       const formData = objectToFormData(payload);
-      const response = await this.client.post<BaseResponse>(
+      const response = await this.client.postForm<BaseResponse>(
         '/census/createMemberDependent',
         formData,
       );
@@ -101,7 +101,7 @@ export class CensusService {
       }
 
       const formData = objectToFormData(payload);
-      const response = await this.client.post<BaseResponse>(
+      const response = await this.client.postForm<BaseResponse>(
         '/census/updateTerminationDate',
         formData,
       );
@@ -131,7 +131,7 @@ export class CensusService {
       formData.append('groupCode', groupCode);
       formData.append('planId', planId);
 
-      const response = await this.client.post<RelationshipTypeResponse>(
+      const response = await this.client.postForm<RelationshipTypeResponse>(
         '/census/relationshipType',
         formData,
       );
@@ -157,7 +157,7 @@ export class CensusService {
       const formData = new FormData();
       formData.append('email', email);
 
-      const response = await this.client.post<EmailValidationResponse>(
+      const response = await this.client.postForm<EmailValidationResponse>(
         '/census/validateEmail',
         formData,
       );

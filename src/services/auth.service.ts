@@ -16,7 +16,10 @@ export class AuthService {
       formData.append('email', email);
       formData.append('password', password);
 
-      const response = await this.client.post<AuthResponse>('/login', formData);
+      const response = await this.client.postForm<AuthResponse>(
+        '/login',
+        formData,
+      );
 
       if (!response.data.success) {
         throw new LyricValidationError(response.data.message || 'Login failed');

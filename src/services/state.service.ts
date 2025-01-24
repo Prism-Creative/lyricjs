@@ -12,7 +12,7 @@ export class StateService {
     formData.append('userId', userId.toString());
     formData.append('stateAbbreviation', stateAbbreviation);
 
-    const response = await this.client.post<StateRulesResponse>(
+    const response = await this.client.postForm<StateRulesResponse>(
       '/states/rules/byUser',
       formData,
     );
