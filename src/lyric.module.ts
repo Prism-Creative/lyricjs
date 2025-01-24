@@ -14,6 +14,11 @@ export interface LyricModuleAsyncOptions {
 @Module({})
 export class LyricModule {
   static forRoot(config: LyricConfig): DynamicModule {
+    const clientProvider: Provider = {
+      provide: LyricClient,
+      useFactory: () => new LyricClient(config),
+    };
+
     return {
       module: LyricModule,
       providers: [
@@ -21,7 +26,7 @@ export class LyricModule {
           provide: LYRIC_CONFIG,
           useValue: config,
         },
-        LyricClient,
+        clientProvider,
         LyricService,
       ],
       exports: [LyricService],
@@ -30,16 +35,16 @@ export class LyricModule {
   }
 
   static forRootAsync(options: LyricModuleAsyncOptions): DynamicModule {
-    const clientProvider: Provider = {
-      provide: LyricClient,
-      useFactory: async (config: LyricConfig) => new LyricClient(config),
-      inject: [LYRIC_CONFIG],
-    };
-
     const asyncConfigProvider: Provider = {
       provide: LYRIC_CONFIG,
       useFactory: options.useFactory,
       inject: options.inject || [],
+    };
+
+    const clientProvider: Provider = {
+      provide: LyricClient,
+      useFactory: (config: LyricConfig) => new LyricClient(config),
+      inject: [LYRIC_CONFIG],
     };
 
     return {
