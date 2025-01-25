@@ -49,7 +49,7 @@
     "url": "git+https://github.com/prism-creative/lyricjs.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/"
   },
   "bugs": {
     "url": "https://github.com/prism-creative/lyricjs/issues"
