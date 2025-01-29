@@ -11,6 +11,29 @@ import { handleAxiosError } from '../utils/error-handler';
 import { LyricValidationError } from '../errors/lyric-api.error';
 import { objectToFormData } from '../utils';
 
+export interface DependentMember {
+  primaryExternalId: string;
+  dependentExternalId: string;
+  groupCode: string;
+  planId: string;
+  firstname: string;
+  lastname: string;
+  dob: string;
+  gender: 'm' | 'f' | 'u';
+  primaryPhone?: string;
+  email?: string;
+  address?: string;
+  address2?: string;
+  city?: string;
+  stateId: number;
+  timezoneId?: number;
+  zipCode?: string;
+  relationShipId: number;
+  effectiveDate?: string;
+  language?: 'en' | 'es';
+  sendRegistrationNotification?: boolean;
+}
+
 export class CensusService {
   constructor(private readonly client: AxiosInstance) {}
 
@@ -165,6 +188,58 @@ export class CensusService {
       if (!response.data.success) {
         throw new LyricValidationError(
           response.data.message || 'Failed to validate email',
+        );
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      throw handleAxiosError(error);
+    }
+  }
+
+  async createDependent(dependent: DependentMember) {
+    try {
+      const formData = new FormData();
+      Object.entries(dependent).forEach(([key, value]) => {
+        if (value !== undefined) {
+          formData.append(key, value.toString());
+        }
+      });
+
+      const response = await this.client.post(
+        '/census/createMemberDependent',
+        formData,
+      );
+
+      if (!response.data.success) {
+        throw new LyricValidationError(
+          response.data.message || 'Failed to create dependent',
+        );
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      throw handleAxiosError(error);
+    }
+  }
+
+  async updateDependent(dependent: DependentMember) {
+    try {
+      const formData = new FormData();
+      Object.entries(dependent).forEach(([key, value]) => {
+        if (value !== undefined) {
+          formData.append(key, value.toString());
+        }
+      });
+
+      const response = await this.client.post(
+        '/census/updateMemberDependent',
+        formData,
+      );
+
+      if (!response.data.success) {
+        throw new LyricValidationError(
+          response.data.message || 'Failed to update dependent',
         );
       }
 
