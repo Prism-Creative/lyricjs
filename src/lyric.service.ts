@@ -34,6 +34,10 @@ export class LyricService {
     return this.lyricClient.timezone;
   }
 
+  get sso() {
+    return this.lyricClient.sso;
+  }
+
   // Expose token management methods
   setAuthToken(token: string) {
     this.lyricClient.setAuthToken(token);

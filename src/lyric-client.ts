@@ -9,6 +9,7 @@ import { StateService } from './services/state.service';
 import { TimezoneService } from './services/timezone.service';
 import { handleAxiosError } from './utils/error-handler';
 import { LyricAuthenticationError } from './errors/lyric-api.error';
+import { SSOService } from './services/sso.service';
 
 export class LyricClient {
   private readonly client: AxiosInstance;
@@ -21,6 +22,7 @@ export class LyricClient {
   public readonly census: CensusService;
   public readonly state: StateService;
   public readonly timezone: TimezoneService;
+  public readonly sso: SSOService;
 
   constructor(private readonly config: LyricConfig) {
     this.client = axios.create({
@@ -71,6 +73,7 @@ export class LyricClient {
       census: new CensusService(this.client),
       state: new StateService(this.client),
       timezone: new TimezoneService(this.client),
+      sso: new SSOService(this.client),
     });
   }
 
