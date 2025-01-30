@@ -4,7 +4,7 @@ import { LyricValidationError } from '../errors/lyric-api.error';
 import { BaseResponse } from '../types';
 
 export interface SSOTokenResponse extends BaseResponse {
-  token: string;
+  accessToken: string;
 }
 
 export class SSOService {
@@ -26,7 +26,7 @@ export class SSOService {
   ): Promise<SSOTokenResponse> {
     return this.createToken('/sso/createAccessTokenWithGroupCode', {
       groupCode,
-      externalId,
+      memberExternalId: externalId,
     });
   }
 
@@ -65,14 +65,14 @@ export class SSOService {
     params: Record<string, string>,
   ): Promise<SSOTokenResponse> {
     try {
-      const formData = new FormData();
-      Object.entries(params).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-
       const response = await this.client.post<SSOTokenResponse>(
         endpoint,
-        formData,
+        new URLSearchParams(params),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
       );
 
       if (!response.data.success) {

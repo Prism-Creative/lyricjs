@@ -6,6 +6,7 @@ import {
   RelationshipTypeResponse,
   EmailValidationResponse,
   BaseResponse,
+  CreatePrimaryMemberResponse,
 } from '../types';
 import { handleAxiosError } from '../utils/error-handler';
 import { LyricValidationError } from '../errors/lyric-api.error';
@@ -39,28 +40,29 @@ export class CensusService {
 
   async createPrimaryMember(
     payload: CreatePrimaryMemberPayload,
-  ): Promise<BaseResponse> {
+  ): Promise<CreatePrimaryMemberResponse> {
     try {
       // Validate required fields
-      if (!payload.externalId || !payload.groupCode || !payload.planId) {
+      if (!payload.primaryExternalId || !payload.groupCode || !payload.planId) {
         throw new LyricValidationError(
           'External ID, group code, and plan ID are required',
         );
       }
 
       if (
-        !payload.firstname ||
-        !payload.lastname ||
+        !payload.firstName ||
+        !payload.lastName ||
         !payload.dob ||
-        !payload.gender
+        !payload.gender ||
+        !payload.planDetailsId
       ) {
         throw new LyricValidationError(
-          'First name, last name, DOB, and gender are required',
+          'First name, last name, DOB, gender, and plan details ID are required',
         );
       }
 
       const formData = objectToFormData(payload);
-      const response = await this.client.postForm<BaseResponse>(
+      const response = await this.client.postForm<CreatePrimaryMemberResponse>(
         '/census/createMember',
         formData,
       );

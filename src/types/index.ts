@@ -182,11 +182,11 @@ export interface MedicationSearchResponse extends BaseResponse {
 }
 
 export interface CreatePrimaryMemberPayload {
-  externalId: string;
+  primaryExternalId: string;
   groupCode: string;
   planId: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   dob: string;
   gender: 'm' | 'f' | 'u';
   primaryPhone?: string;
@@ -200,6 +200,11 @@ export interface CreatePrimaryMemberPayload {
   effectiveDate?: string;
   language?: 'en' | 'es';
   sendRegistrationNotification?: boolean;
+  planDetailsId: string;
+  heightFeet?: string;
+  heightInches?: string;
+  weight?: string;
+  numAllowedDependents?: number;
 }
 
 export interface CreateDependentPayload extends CreatePrimaryMemberPayload {
@@ -269,6 +274,10 @@ export interface ProviderAvailabilityResponse extends BaseResponse {
 
 export interface EmailValidationResponse extends BaseResponse {
   availableForUse: boolean;
+}
+
+export interface CreatePrimaryMemberResponse extends BaseResponse {
+  userId: string;
 }
 
 export interface StatesResponse extends BaseResponse {
