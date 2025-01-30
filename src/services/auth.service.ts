@@ -25,7 +25,9 @@ export class AuthService {
         throw new LyricValidationError(response.data.message || 'Login failed');
       }
 
-      return response.data;
+      const token = response.headers.authorization?.replace('Bearer ', '');
+
+      return { ...response.data, accessToken: token };
     } catch (error) {
       throw handleAxiosError(error);
     }
