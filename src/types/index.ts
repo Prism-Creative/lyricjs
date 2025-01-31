@@ -277,7 +277,7 @@ export interface EmailValidationResponse extends BaseResponse {
 }
 
 export interface CreatePrimaryMemberResponse extends BaseResponse {
-  userId: string;
+  userid: number;
 }
 
 export interface StatesResponse extends BaseResponse {
