@@ -38,6 +38,10 @@ export class LyricService {
     return this.lyricClient.sso;
   }
 
+  get member() {
+    return this.lyricClient.member;
+  }
+
   // Expose token management methods
   setAuthToken(token: string) {
     this.lyricClient.setAuthToken(token);
