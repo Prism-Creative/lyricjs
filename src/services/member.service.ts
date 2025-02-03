@@ -55,4 +55,23 @@ export class MemberService {
       throw handleAxiosError(error);
     }
   }
+
+  async createDependent(payload: CreateDependentPayload): Promise<any> {
+    try {
+      const response = await this.client.post<any>(
+        '/memberAccount/createDependent',
+        payload,
+      );
+
+      if (!response.data.success) {
+        throw new LyricValidationError(
+          response.data.message || 'Failed to get account info',
+        );
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      throw handleAxiosError(error);
+    }
+  }
 }

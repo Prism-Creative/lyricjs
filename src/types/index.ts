@@ -208,7 +208,20 @@ export interface CreatePrimaryMemberPayload {
 }
 
 export interface CreateDependentPayload extends CreatePrimaryMemberPayload {
-  primaryExternalId: string;
+  planId: string;
+  firstName: string;
+  lastName: string;
+  dob: string;
+  gender: 'm' | 'f' | 'u';
+  primaryPhone?: string;
+  secondaryPhone?: string;
+  email?: string;
+  address?: string;
+  address2?: string;
+  city?: string;
+  stateId?: number;
+  timezoneId?: number;
+  zipCode?: string;
   relationShipId: number;
 }
 
