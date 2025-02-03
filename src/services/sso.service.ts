@@ -39,7 +39,7 @@ export class SSOService {
         '/sso/createAPIAccessToken',
         new URLSearchParams({
           groupCode,
-          externalId,
+          memberExternalId: externalId,
         }),
         {
           headers: {
