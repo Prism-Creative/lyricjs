@@ -83,11 +83,6 @@ export class CensusService {
     payload: CreateDependentPayload,
   ): Promise<BaseResponse> {
     try {
-      // Validate required fields
-      if (!payload.primaryExternalId) {
-        throw new LyricValidationError('Primary external ID is required');
-      }
-
       if (!payload.relationShipId) {
         throw new LyricValidationError('Relationship ID is required');
       }
