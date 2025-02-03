@@ -35,26 +35,10 @@ export class SSOService {
     externalId: string,
   ): Promise<SSOTokenResponse> {
     try {
-      const response = await this.client.post<SSOTokenResponse>(
-        '/sso/createAPIAccessToken',
-        new URLSearchParams({
-          groupCode,
-          memberExternalId: externalId,
-        }),
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        },
-      );
-
-      if (!response.data.success) {
-        throw new LyricValidationError(
-          response.data.message || 'Failed to create access token',
-        );
-      }
-
-      return response.data;
+      return this.createToken('/sso/createAPIAccessToken', {
+        groupCode,
+        memberExternalId: externalId,
+      });
     } catch (error: unknown) {
       throw handleAxiosError(error);
     }
