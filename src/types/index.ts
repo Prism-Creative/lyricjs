@@ -207,7 +207,7 @@ export interface CreatePrimaryMemberPayload {
   numAllowedDependents?: number;
 }
 
-export interface CreateDependentPayload extends CreatePrimaryMemberPayload {
+export interface CreateDependentPayload {
   planId: string;
   firstName: string;
   lastName: string;
