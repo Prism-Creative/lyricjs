@@ -58,9 +58,16 @@ export class MemberService {
 
   async createDependent(payload: CreateDependentPayload): Promise<any> {
     try {
+      const formData = objectToFormData(payload);
+
       const response = await this.client.post<any>(
         '/memberAccount/createDependent',
-        payload,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       );
 
       if (!response.data.success) {

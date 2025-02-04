@@ -7,6 +7,7 @@ import {
   EmailValidationResponse,
   BaseResponse,
   CreatePrimaryMemberResponse,
+  UpdatePrimaryMemberPayload,
 } from '../types';
 import { handleAxiosError } from '../utils/error-handler';
 import { LyricValidationError } from '../errors/lyric-api.error';
@@ -79,14 +80,49 @@ export class CensusService {
     }
   }
 
+  async updatePrimaryMember(payload: UpdatePrimaryMemberPayload): Promise<any> {
+    try {
+      if (!payload.primaryExternalId || !payload.groupCode || !payload.planId) {
+        throw new LyricValidationError(
+          'External ID, group code, and plan ID are required',
+        );
+      }
+
+      if (
+        !payload.firstName ||
+        !payload.lastName ||
+        !payload.dob ||
+        !payload.gender ||
+        !payload.planDetailsId
+      ) {
+        throw new LyricValidationError(
+          'First name, last name, DOB, gender, and plan details ID are required',
+        );
+      }
+
+      const formData = objectToFormData(payload);
+      const response = await this.client.postForm<CreatePrimaryMemberResponse>(
+        '/census/updateMember',
+        formData,
+      );
+
+      if (!response.data.success) {
+        throw new LyricValidationError(
+          response.data.message || 'Failed to update primary member',
+        );
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      throw handleAxiosError(error);
+    }
+  }
+
   async createDependentMember(
     payload: CreateDependentPayload,
   ): Promise<BaseResponse> {
     try {
       // Validate required fields
-      if (!payload.primaryExternalId) {
-        throw new LyricValidationError('Primary external ID is required');
-      }
 
       if (!payload.relationShipId) {
         throw new LyricValidationError('Relationship ID is required');

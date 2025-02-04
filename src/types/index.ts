@@ -207,8 +207,26 @@ export interface CreatePrimaryMemberPayload {
   numAllowedDependents?: number;
 }
 
-export interface CreateDependentPayload {
+export interface UpdatePrimaryMemberPayload {
+  primaryExternalId: string;
+  groupCode: string;
   planId: string;
+  firstName: string;
+  lastName: string;
+  dob: string; //MM/dd/yyyy
+  gender: 'm' | 'f' | 'u';
+  primaryPhone?: string;
+  email?: string;
+  address?: string;
+  address2?: string;
+  city?: string;
+  stateId?: number;
+  timezoneId?: number;
+  zipCode?: string;
+  planDetailsId: string;
+}
+
+export interface CreateDependentPayload {
   firstName: string;
   lastName: string;
   dob: string;
