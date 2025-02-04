@@ -122,8 +122,6 @@ export class CensusService {
     payload: CreateDependentPayload,
   ): Promise<BaseResponse> {
     try {
-      // Validate required fields
-
       if (!payload.relationShipId) {
         throw new LyricValidationError('Relationship ID is required');
       }
