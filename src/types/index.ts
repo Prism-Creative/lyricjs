@@ -249,6 +249,12 @@ export interface UpdateTerminationDatePayload {
   terminationDate: string;
 }
 
+export interface UpdateEffectiveDatePayload {
+  primaryExternalId: string;
+  groupCode: string;
+  effectiveDate: string;
+}
+
 export interface RelationshipTypeResponse extends BaseResponse {
   dependentRelationships: Array<{
     name: string;

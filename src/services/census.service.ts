@@ -8,6 +8,7 @@ import {
   BaseResponse,
   CreatePrimaryMemberResponse,
   UpdatePrimaryMemberPayload,
+  UpdateEffectiveDatePayload,
 } from '../types';
 import { handleAxiosError } from '../utils/error-handler';
 import { LyricValidationError } from '../errors/lyric-api.error';
@@ -168,6 +169,39 @@ export class CensusService {
       if (!response.data.success) {
         throw new LyricValidationError(
           response.data.message || 'Failed to update termination date',
+        );
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      throw handleAxiosError(error);
+    }
+  }
+
+  async updateEffectiveDate(
+    payload: UpdateEffectiveDatePayload,
+  ): Promise<BaseResponse> {
+    try {
+      // Validate required fields
+      if (
+        !payload.primaryExternalId ||
+        !payload.groupCode ||
+        !payload.effectiveDate
+      ) {
+        throw new LyricValidationError(
+          'Primary external ID, group code, and effective date are required',
+        );
+      }
+
+      const formData = objectToFormData(payload);
+      const response = await this.client.postForm<BaseResponse>(
+        '/census/updateEffectiveDate',
+        formData,
+      );
+
+      if (!response.data.success) {
+        throw new LyricValidationError(
+          response.data.message || 'Failed to update effective date',
         );
       }
 
