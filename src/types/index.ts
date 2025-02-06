@@ -243,6 +243,25 @@ export interface CreateDependentPayload {
   relationShipId: number;
 }
 
+export interface UpdateDependentPayload {
+  firstName: string;
+  lastName: string;
+  dob: string;
+  gender: 'm' | 'f' | 'u';
+  primaryPhone?: string;
+  secondaryPhone?: string;
+  email?: string;
+  address?: string;
+  address2?: string;
+  city?: string;
+  stateId?: number;
+  timezoneId?: number;
+  zipCode?: string;
+  relationShipId: number;
+  statusId: number;
+  dependentUserId: number;
+}
+
 export interface UpdateTerminationDatePayload {
   primaryExternalId: string;
   groupCode: string;

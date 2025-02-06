@@ -7,6 +7,7 @@ import {
   EmailValidationResponse,
   BaseResponse,
   CreatePrimaryMemberResponse,
+  UpdateDependentPayload,
 } from '../types';
 import { handleAxiosError } from '../utils/error-handler';
 import { LyricValidationError } from '../errors/lyric-api.error';
@@ -72,7 +73,33 @@ export class MemberService {
 
       if (!response.data.success) {
         throw new LyricValidationError(
-          response.data.message || 'Failed to get account info',
+          response.data.message || 'Failed to create dependent',
+        );
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      throw handleAxiosError(error);
+    }
+  }
+
+  async updateDependent(payload: UpdateDependentPayload): Promise<any> {
+    try {
+      const formData = objectToFormData(payload);
+
+      const response = await this.client.post<any>(
+        '/memberAccount/updateDependentInfo',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      if (!response.data.success) {
+        throw new LyricValidationError(
+          response.data.message || 'Failed to get update dependent info',
         );
       }
 
